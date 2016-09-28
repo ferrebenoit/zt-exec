@@ -40,17 +40,12 @@ package org.zeroturnaround.exec.listener;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Destroys all registered <code>Process</code>es when the VM exits.
  * <p>
  * This class is copied from <code>Commons Exec</code>.
  */
 public class ShutdownHookProcessDestroyer implements ProcessDestroyer, Runnable {
-
-  private static final Logger log = LoggerFactory.getLogger(ShutdownHookProcessDestroyer.class);
 
   /**
    * Singleton instance of the {@link ShutdownHookProcessDestroyer}.
@@ -127,7 +122,8 @@ public class ShutdownHookProcessDestroyer implements ProcessDestroyer, Runnable 
       boolean removed = Runtime.getRuntime().removeShutdownHook(
           destroyProcessThread);
       if (!removed) {
-        log.error("Could not remove shutdown hook");
+    	//TODO change to AOP
+    	    //log.error("Could not remove shutdown hook");
       }
       /*
        * start the hook thread, a unstarted thread may not be eligible for
@@ -246,7 +242,8 @@ public class ShutdownHookProcessDestroyer implements ProcessDestroyer, Runnable 
       process.destroy();
     }
     catch (Throwable t) {
-      log.error("Unable to terminate process during process shutdown");
+    	//TODO change to AOP
+        //log.error("Unable to terminate process during process shutdown");
     }
   }
 }

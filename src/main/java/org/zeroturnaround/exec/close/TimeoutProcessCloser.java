@@ -26,8 +26,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.stream.ExecuteStreamHandler;
 import org.zeroturnaround.exec.stream.PumpStreamHandler;
 
@@ -38,8 +36,6 @@ import org.zeroturnaround.exec.stream.PumpStreamHandler;
  * This is used on Windows where sometimes sub process' streams do not close properly.
  */
 public class TimeoutProcessCloser extends StandardProcessCloser {
-
-  private static final Logger log = LoggerFactory.getLogger(TimeoutProcessCloser.class);
 
   private final long timeout;
 
@@ -76,7 +72,8 @@ public class TimeoutProcessCloser extends StandardProcessCloser {
       throw new IllegalStateException("Could not close streams of " + process, e.getCause());
     }
     catch (TimeoutException e) {
-      log.warn("Could not close streams of {} in {} {}", process, timeout, getUnitsAsString(timeout, unit));
+    	//TODO change to AOP
+        //log.warn("Could not close streams of {} in {} {}", process, timeout, getUnitsAsString(timeout, unit));
     }
     finally {
       // Ensure that any data received so far is flushed from buffers

@@ -21,8 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.close.ProcessCloser;
 import org.zeroturnaround.exec.listener.ProcessListener;
 import org.zeroturnaround.exec.stop.ProcessStopper;
@@ -34,8 +32,6 @@ import org.zeroturnaround.exec.stop.ProcessStopper;
  * @author Rein Raudjärv
  */
 class WaitForProcess implements Callable<ProcessResult> {
-
-  private static final Logger log = LoggerFactory.getLogger(WaitForProcess.class);
 
   private final Process process;
 
@@ -65,23 +61,17 @@ class WaitForProcess implements Callable<ProcessResult> {
   private final ProcessListener listener;
 
   /**
-   * Helper for logging messages about starting and waiting for the processes.
-   */
-  private final MessageLogger messageLogger;
-
-  /**
    * Thread which executes this operation.
    */
   private volatile Thread workerThread;
 
-  public WaitForProcess(Process process, ProcessAttributes attributes, ProcessStopper stopper, ProcessCloser closer, ByteArrayOutputStream out, ProcessListener listener, MessageLogger messageLogger) {
+  public WaitForProcess(Process process, ProcessAttributes attributes, ProcessStopper stopper, ProcessCloser closer, ByteArrayOutputStream out, ProcessListener listener) {
     this.process = process;
     this.attributes = attributes;
     this.stopper = stopper;
     this.closer = closer;
     this.out = out;
     this.listener = listener;
-    this.messageLogger = messageLogger;
   }
 
   /**
@@ -99,11 +89,13 @@ class WaitForProcess implements Callable<ProcessResult> {
       try {
         exit = process.waitFor();
         finished = true;
-        messageLogger.message(log, "{} stopped with exit code {}", this, exit);
+        //TODO change to AOP
+        //messageLogger.message(log, "{} stopped with exit code {}", this, exit);
       }
       finally {
         if (!finished) {
-          messageLogger.message(log, "Stopping {}...", this);
+        	//TODO change to AOP
+            //messageLogger.message(log, "Stopping {}...", this);
           stopper.stop(process);
         }
 

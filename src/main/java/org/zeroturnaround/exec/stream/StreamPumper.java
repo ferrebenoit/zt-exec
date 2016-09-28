@@ -41,15 +41,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Copies all data from an input stream to an output stream.
  */
 public class StreamPumper implements Runnable {
-
-  private static final Logger log = LoggerFactory.getLogger(StreamPumper.class);
 
   /** the default size of the internal buffer for copying the streams */
   private static final int DEFAULT_SIZE = 1024;
@@ -115,7 +110,8 @@ public class StreamPumper implements Runnable {
    * soon as the input stream is closed or an error occurs.
    */
   public void run() {
-    log.trace("{} started.", this);
+	//TODO change to AOP
+	    //log.trace("{} started.", this);
     synchronized (this) {
       // Just in case this object is reused in the future
       finished = false;
@@ -131,12 +127,14 @@ public class StreamPumper implements Runnable {
     } catch (Exception e) {
       // nothing to do - happens quite often with watchdog
     } finally {
-      log.trace("{} finished.", this);
+    	//TODO change to AOP
+        //log.trace("{} finished.", this);
       if (closeWhenExhausted) {
         try {
           os.close();
         } catch (IOException e) {
-          log.error("Got exception while closing exhausted output stream", e);
+        	//TODO change to AOP
+            //log.error("Got exception while closing exhausted output stream", e);
         }
       }
       synchronized (this) {

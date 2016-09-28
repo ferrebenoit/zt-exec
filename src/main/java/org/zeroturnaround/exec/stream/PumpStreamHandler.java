@@ -41,9 +41,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Copies standard output and error of subprocesses to standard output and error
  * of the parent process. If output or error stream are set to null, any feedback
@@ -51,8 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PumpStreamHandler implements ExecuteStreamHandler {
  
-  private static final Logger log = LoggerFactory.getLogger(PumpStreamHandler.class);
-
   protected Thread outputThread;
 
   protected Thread errorThread;
@@ -159,7 +154,8 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
         os.close();
       }
       catch (IOException e) {
-        log.info("Got exception while closing output stream", e);
+    	//TODO change to AOP
+    	    //log.info("Got exception while closing output stream", e);
       }
     }
   }
@@ -189,7 +185,8 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
       }
       // #33 Interrupt reading from a PipedInputStream to unblock the pumping thread
       inputThread.interrupt();
-      log.trace("Joining input thread {}...", inputThread);
+    //TODO change to AOP
+      //log.trace("Joining input thread {}...", inputThread);
       try {
         inputThread.join();
         inputThread = null;
@@ -200,7 +197,8 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
     }
 
     if (outputThread != null) {
-      log.trace("Joining output thread {}...", outputThread);
+    	//TODO change to AOP
+        //log.trace("Joining output thread {}...", outputThread);
       try {
         outputThread.join();
         outputThread = null;
@@ -211,7 +209,8 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
     }
 
     if (errorThread != null) {
-      log.trace("Joining error thread {}...", errorThread);
+    	//TODO change to AOP
+        //log.trace("Joining error thread {}...", errorThread);
       try {
         errorThread.join();
         errorThread = null;
@@ -226,22 +225,26 @@ public class PumpStreamHandler implements ExecuteStreamHandler {
 
   public void flush() {
     if (out != null) {
-      log.trace("Flushing output stream {}...", out);
+    	//TODO change to AOP
+        //log.trace("Flushing output stream {}...", out);
       try {
         out.flush();
       }
       catch (IOException e) {
-        log.error("Got exception while flushing the output stream", e);
+    	//TODO change to AOP
+    	    //log.error("Got exception while flushing the output stream", e);
       }
     }
 
     if (err != null && err != out) {
-      log.trace("Flushing error stream {}...", err);
+    	//TODO change to AOP
+        //log.trace("Flushing error stream {}...", err);
       try {
         err.flush();
       }
       catch (IOException e) {
-        log.error("Got exception while flushing the error stream", e);
+    	//TODO change to AOP
+    	    //log.error("Got exception while flushing the error stream", e);
       }
     }
   }

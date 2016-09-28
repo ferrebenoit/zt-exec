@@ -22,8 +22,6 @@ import java.io.ByteArrayInputStream;
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Assume;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.ProcessExecutor;
 
 /**
@@ -31,9 +29,7 @@ import org.zeroturnaround.exec.ProcessExecutor;
  */
 public class InputRedirectTest {
 
-  private static final Logger log = LoggerFactory.getLogger(InputRedirectTest.class);
-
-  @Test
+   @Test
   public void testRedirectInput() throws Exception {
     String binTrue;
     if (SystemUtils.IS_OS_LINUX) {
@@ -52,7 +48,8 @@ public class InputRedirectTest {
     ProcessExecutor exec = new ProcessExecutor().command(binTrue);
     // Test that we don't get IOException: Stream closed
     int exit = exec.redirectInput(bais).readOutput(true).execute().getExitValue();
-    log.debug("Exit: {}", exit);
+  //TODO change to AOP
+    //log.debug("Exit: {}", exit);
   }
 
 }

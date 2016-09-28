@@ -19,16 +19,12 @@ package org.zeroturnaround.exec.close;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.stream.ExecuteStreamHandler;
 
 /**
  * Stops {@link ExecuteStreamHandler} from pumping the streams and closes them.
  */
 public class StandardProcessCloser implements ProcessCloser {
-
-  private static final Logger log = LoggerFactory.getLogger(StandardProcessCloser.class);
 
   protected final ExecuteStreamHandler streams;
 
@@ -65,10 +61,12 @@ public class StandardProcessCloser implements ProcessCloser {
          * So since Java 8 after UNIXProcess detects the exit and there's something in the output buffer closing this stream throws IOException
          * with message "Stream closed" from NullOutputStream.
          */
-        log.trace("Failed to close process output stream:", e);
+    	//TODO change to AOP
+    	    //log.trace("Failed to close process output stream:", e);
       }
       else {
-        log.error("Failed to close process output stream:", e);
+    	//TODO change to AOP
+    	    //log.error("Failed to close process output stream:", e);
         caught = add(caught, e);
       }
     }
@@ -77,7 +75,8 @@ public class StandardProcessCloser implements ProcessCloser {
       process.getInputStream().close();
     }
     catch (IOException e) {
-      log.error("Failed to close process input stream:", e);
+    	//TODO change to AOP
+        //log.error("Failed to close process input stream:", e);
       caught = add(caught, e);
     }
 
@@ -85,7 +84,8 @@ public class StandardProcessCloser implements ProcessCloser {
       process.getErrorStream().close();
     }
     catch (IOException e) {
-      log.error("Failed to close process error stream:", e);
+    	//TODO change to AOP
+        //log.error("Failed to close process error stream:", e);
       caught = add(caught, e);
     }
 

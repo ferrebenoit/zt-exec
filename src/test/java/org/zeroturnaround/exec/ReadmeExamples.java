@@ -6,10 +6,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.slf4j.LoggerFactory;
-import org.zeroturnaround.exec.stream.LogOutputStream;
-import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
-
 /**
  * Examples of the readme.
  */
@@ -32,36 +28,6 @@ class ReadmeExamples {
     return output;
   }
 
-  void pumpOutputToLogger() throws Exception {
-    new ProcessExecutor().command("java", "-version")
-    .redirectOutput(Slf4jStream.of(LoggerFactory.getLogger(getClass().getName() + ".MyProcess")).asInfo()).execute();
-  }
-
-  void pumpOutputToLoggerShorter() throws Exception {
-    new ProcessExecutor().command("java", "-version")
-    .redirectOutput(Slf4jStream.of("MyProcess").asInfo()).execute();
-  }
-
-  void pumpOutputToLoggerOfCaller() throws Exception {
-    new ProcessExecutor().command("java", "-version")
-    .redirectOutput(Slf4jStream.ofCaller().asInfo()).execute();
-  }
-
-  String pumpOutputToLoggerAndGetOutput() throws Exception {
-    String output = new ProcessExecutor().command("java", "-version")
-        .redirectOutput(Slf4jStream.of(getClass()).asInfo())
-        .readOutput(true).execute().outputUTF8();
-    return output;
-  }
-
-  String pumpErrorToLoggerAndGetOutput() throws Exception {
-    String output = new ProcessExecutor().command("java", "-version")
-        .redirectError(Slf4jStream.of(getClass()).asInfo())
-        .readOutput(true).execute()
-        .outputUTF8();
-    return output;
-  }
-
   void executeWithTimeout() throws Exception {
     try {
       new ProcessExecutor().command("java", "-version")
@@ -75,17 +41,6 @@ class ReadmeExamples {
   void pumpOutputToStream(OutputStream out) throws Exception {
     new ProcessExecutor().command("java", "-version")
           .redirectOutput(out).execute();
-  }
-
-  void pumpOutputToLogStream(OutputStream out) throws Exception {
-    new ProcessExecutor().command("java", "-version")
-        .redirectOutput(new LogOutputStream() {
-          @Override
-          protected void processLine(String line) {
-            // ...
-          }
-        })
-        .execute();
   }
 
   void destroyProcessOnJvmExit() throws Exception {

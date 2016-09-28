@@ -40,17 +40,12 @@ package org.zeroturnaround.exec.stream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Copies all data from an System.input stream to an output stream of the executed process.
  *
  * @author mkleint
  */
 public class InputStreamPumper implements Runnable {
-
-  private static final Logger log = LoggerFactory.getLogger(InputStreamPumper.class);
 
   public static final int SLEEPING_TIME = 100;
 
@@ -90,7 +85,8 @@ public class InputStreamPumper implements Runnable {
       }
     }
     catch (Exception e) {
-      log.error("Got exception while reading/writing the stream", e);
+    	//TODO change to AOP
+        //log.error("Got exception while reading/writing the stream", e);
     }
   }
 

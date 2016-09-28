@@ -17,30 +17,9 @@
  */
 package org.zeroturnaround.exec.test;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.zeroturnaround.exec.stream.CallerLoggerUtil;
 
 
 public class CallerLoggerUtilTest {
 
-  @Test
-  public void testFullName() throws Exception {
-    String fullName = "my.full.Logger";
-    Assert.assertEquals(fullName, CallerLoggerUtil.getName(fullName));
-  }
-
-  @Test
-  public void testShortName() throws Exception {
-    String shortName = "MyLogger";
-    String fullName = getClass().getName() + "." + shortName;
-    Assert.assertEquals(fullName, CallerLoggerUtil.getName(shortName));
-  }
-
-  @Test
-  public void testMyClassName() throws Exception {
-    String fullName = getClass().getName();
-    Assert.assertEquals(fullName, CallerLoggerUtil.getName(null));
-  }
 
 }
